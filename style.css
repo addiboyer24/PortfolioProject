@@ -1,11 +1,11 @@
 .panel-title{
-    font-style:bold italic;
-    padding-top:20px;
-    padding-bottom:20px;
-    font-size:18px;
+    font-style:italic;
+    padding-top:10px;
+    padding-bottom:10px;
+    font-size:20px;
+    text-align:left;
 }
 .time{
-    padding-top:50px;
 }
 body{
     font-family:Ubuntu;
@@ -15,4 +15,46 @@ body{
 }
 h1{
     color:#70002e;
+}
+h2{
+    color:#70002e;
+}
+.nav-item{
+    margin-top:20px;
+    margin-bottom:20px;
+    margin-left:20px;
+    margin-right:20px;
+    height:100px;
+}
+
+.jumbotron{
+    background-color:white;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.nav-description{
+    text-align:center;
+    padding-left:50px;
+    padding-right:50px;
+}
+
+.video-table{
+    width:100%;
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.faculty-pic{
+    height:300px;
+}
+
+th{
+    font-size:22px;
+}
+td{
+    font-size:18px;
+    font-style:italic;
+}
+.github{
+    height:35px;
 }
