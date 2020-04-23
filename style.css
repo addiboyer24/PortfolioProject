@@ -5,8 +5,7 @@
     font-size:20px;
     text-align:left;
 }
-.time{
-}
+
 body{
     font-family:Ubuntu;
 }
@@ -19,23 +18,32 @@ h1{
 h2{
     color:#70002e;
 }
+
 .nav-item{
     margin-top:20px;
     margin-bottom:20px;
     margin-left:20px;
     margin-right:20px;
-    height:100px;
+    height:175px;
 }
 
-.jumbotron{
-    background-color:white;
-    margin-top:20px;
-    margin-bottom:20px;
+.nav-item:hover{
+    box-shadow: 2px 2px #70002e;
+    height:180px;
 }
+
 .nav-description{
     text-align:center;
     padding-left:50px;
     padding-right:50px;
+    color:#70002e;
+    font-style:italic;
+}
+
+.jumbotron{
+
+    padding-top:60px;
+    padding-bottom:60px;
 }
 
 .video-table{
