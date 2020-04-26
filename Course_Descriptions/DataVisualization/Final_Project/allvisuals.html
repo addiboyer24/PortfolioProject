@@ -1,0 +1,263 @@
+<!--DoctypeHTML-->
+<html>
+    
+    <head><title>Final Data Project</title>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="http://d3js.org/queue.v1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="shelterstyle.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+        <style>
+            
+        </style>
+    </head>
+    
+        <body>
+            <iframe src="Final2.html" style="float:top; height:100%; width:100%;"></iframe>
+            <iframe src="Final4.html" style="float:top; height:100%; width:100%;"></iframe>
+            <center><h1>Intake Type -> Outcome Type (Cats)</h1></center>
+            <h2 style="float:right; padding-right:100px; font-size:30px; font-style:italic;">Hover over to reveal data</h2>
+    <!--<h2>Hover over the intake conditions to reveal data</h2>-->
+    
+    
+        </body>
+    
+    <script>
+        
+        $(document).ready(function(){
+    queue().defer(d3.csv, 'aac_intakes_outcomes.csv').await(makeVisual);
+        
+        
+        function makeVisual(err, data){
+            var width = 1400;
+            var height = 800;
+            var canvas = d3.select("body").append("svg").attr("width", width).attr("height", height).style("background-color", "white"); 
+            
+            console.log(data);
+            var cats = new Array();
+            var dogs = new Array();
+            var intake_condition = "{";
+            
+            data.forEach(function(d){
+                if(d.animal_type == "Dog"){
+                    dogs.push(d);
+                }
+                if(d.animal_type == "Cat"){
+                    cats.push(d);
+                }
+            });
+            
+            // Size of dogs and cats respectively
+            console.log(dogs.length);
+            console.log(cats.length);
+            
+            var catIntakeTypes = new Array();
+            var catOutcomeTypes = new Array();
+            
+            var intakeNumbers = {};
+            var outcomeNumbers = {};
+            cats.forEach(function(cat){
+                
+                if((jQuery.inArray(cat.intake_type, catIntakeTypes) == -1)){
+                    catIntakeTypes.push(cat.intake_type);
+                }
+                
+                if((jQuery.inArray(cat.outcome_type, catOutcomeTypes) == -1)){
+                    catOutcomeTypes.push(cat.outcome_type);
+                }
+                    
+                
+            });
+            
+            // The cat intake types
+            console.log(catIntakeTypes);
+            // The cat outcome types
+            console.log(catOutcomeTypes);
+            // Initialize with all 0's
+            catIntakeTypes.forEach(function(type){
+                intakeNumbers[type] = 0;
+            });
+            catOutcomeTypes.forEach(function(type){
+                outcomeNumbers[type] = 0;
+            });
+            
+            
+            console.log(intakeNumbers);
+            
+            cats.forEach(function(cat){
+                intakeNumbers[cat.intake_type]+=1;
+                outcomeNumbers[cat.outcome_type]+=1;
+            });
+            
+            console.log(intakeNumbers);
+            console.log(outcomeNumbers);
+            
+            var catsMatrix = new Array(catIntakeTypes.length);
+            for(var i = 0; i< catIntakeTypes.length; i++){
+                catsMatrix[i] = new Array(catOutcomeTypes.length);
+            }
+            
+            for(var i = 0; i < catIntakeTypes.length; i++){
+                for(var j = 0; j < catOutcomeTypes.length; j++){
+                    catsMatrix[i][j] = 0;
+                }
+            }
+            
+            cats.forEach(function(cat){
+                catsMatrix[catIntakeTypes.indexOf(cat.intake_type)][catOutcomeTypes.indexOf(cat.outcome_type)]+=1; 
+            });
+            
+            console.log(catsMatrix);
+            
+            /*var dogIntakeTypes = new Array();
+            var dogOutcomeTypes = new Array();
+            
+            var intakeNumbers = {};
+            var outcomeNumbers = {};
+            dogs.forEach(function(dog){
+                
+                if((jQuery.inArray(dog.intake_condition, dogIntakeTypes) == -1)){
+                    dogIntakeTypes.push(dog.intake_condition);
+                }
+                
+                if((jQuery.inArray(dog.outcome_type, dogOutcomeTypes) == -1)){
+                    dogOutcomeTypes.push(dog.outcome_type);
+                }
+                    
+                
+            });
+            
+            // The cat intake types
+            console.log(dogIntakeTypes);
+            // The cat outcome types
+            console.log(dogOutcomeTypes);
+            // Initialize with all 0's
+            dogIntakeTypes.forEach(function(type){
+                intakeNumbers[type] = 0;
+            });
+            dogOutcomeTypes.forEach(function(type){
+                outcomeNumbers[type] = 0;
+            });
+            
+            
+            console.log(intakeNumbers);
+            
+            dogs.forEach(function(dog){
+                intakeNumbers[dog.intake_condition]+=1;
+                outcomeNumbers[dog.outcome_type]+=1;
+            });
+            
+            console.log(intakeNumbers);
+            console.log(outcomeNumbers);/*
+            
+            /*var dogsMatrix = new Array(dogIntakeTypes.length);
+            for(var i = 0; i< dogIntakeTypes.length; i++){
+                dogsMatrix[i] = new Array(dogOutcomeTypes.length);
+            }
+            
+            for(var i = 0; i < dogIntakeTypes.length; i++){
+                for(var j = 0; j < dogOutcomeTypes.length; j++){
+                    dogsMatrix[i][j] = 0;
+                }
+            }
+            
+            dogs.forEach(function(dog){
+                dogsMatrix[dogIntakeTypes.indexOf(dog.intake_condition)][dogOutcomeTypes.indexOf(dog.outcome_type)]+=1; 
+            });
+            
+            console.log(dogsMatrix);*/
+            
+            var xScale;
+            
+            /*console.log("Min " + Math.min.apply(null,(dogsMatrix[0])));
+            console.log("Max " + Math.max.apply(null, (dogsMatrix[0])));*/
+            const chartWidth = 1000;
+            var index = 0;
+            
+            console.log("Cats Matrix", catsMatrix);
+            var ticksArray = new Array();
+            
+            for(var i = 0; i < catsMatrix.length; i++){
+                var max = Math.max.apply(null, catsMatrix[i]);
+                console.log("Max value: " + max);
+                var barRatio = max/chartWidth;
+                var t0 = 0;
+                var t1 = max/4
+                var t2 = max/2;
+                var t3 = 3*max/4;
+                var t4 = max;
+                
+                ticksArray.push([t0,t1,t2,t3,t4]);
+                
+                console.log(barRatio);
+                for(var j = 0; j < catsMatrix[i].length; j++){
+                    
+                    //console.log(i,j);
+                    //console.log(dogsMatrix[i][j]);
+                    canvas.append("rect").attr("x", 200).attr("y", 100+j*75).attr("width",catsMatrix[i][j]/barRatio).attr("height", 10).attr("fill", "lightgray").attr("stroke", "white").attr("id", catIntakeTypes[i].replace(" ", "")).attr("visibility", "hidden");
+                    canvas.append("text").attr("x", 200 + catsMatrix[i][j]/barRatio).attr("y", 95+j*75).text((catsMatrix[i][j]/intakeNumbers[catIntakeTypes[i]]*100).toFixed(1)+"%").attr("class", "label").attr("opacity",1).attr("visibility", "hidden").attr("id", catIntakeTypes[i].replace(" ", ""));
+                       
+                }
+            }
+            
+            for(var i = 0; i < catIntakeTypes.length; i++){
+                 for(var j = 0; j < ticksArray[i].length; j++){
+                canvas.append("text").attr("x", 200+j*250).attr("y", 190+(75*(catsMatrix[0].length-1)+5)).attr("stroke", "gray").text(ticksArray[i][j]).attr("stroke", "black").attr("class", "label").attr("visibility","hidden").attr("id",catIntakeTypes[i].replace(" ", ""));
+            }
+                
+            }
+            
+            for(var i = 1; i < 4; i++){
+                canvas.append("line").attr("x1", 200+i*250).attr("x2", 200+i*250).attr("y1", 100).attr("y2",100+75*(catsMatrix[0].length-1)+5).attr("stroke", "white").attr("stroke-width", 3).attr("id", "grid");
+            }
+            
+            canvas.append("line").attr("x1", 200).attr("x2", 200).attr("y1",100).attr("y2", 180+75*(catsMatrix[0].length-1)).attr("stroke", "lightgray");
+            //canvas.append("line").attr("x1", 100).attr("x2", 600).attr("y1",50*(dogsMatrix[0].length-1)).attr("y2", 50*(dogsMatrix[0].length-1)).attr("stroke", "black");
+            
+            
+            for(var i = 0; i < 6; i++){
+                canvas.append("line").attr("x1", 200+i*250).attr("x2", 200+i*250).attr("y1", 160+(75*(catsMatrix[0].length-1)-5)).attr("y2",170+(75*(catsMatrix[0].length-1)+5)).attr("stroke", "gray");
+            }
+            
+            for(var i = 0; i < catOutcomeTypes.length; i++){
+                canvas.append("text").attr("x", 50).attr("y", 110+i*75).text(catOutcomeTypes[i]).attr("stroke", "black").attr("class", "label");
+            }
+            
+            for(var i = 0; i < catIntakeTypes.length; i++){
+                canvas.append("circle").attr("cx", width-125).attr("cy", 100+i*75).attr("r", 10).attr("fill", "red").attr("class", "axis").attr("id", catIntakeTypes[i].replace(" ", ""));
+                canvas.append("text").attr("x", width-160).attr("y", 125+i*75).text(catIntakeTypes[i]).attr("class", "axis");
+                canvas.append("text").attr("x", width - 125).attr("y", 75+i*75).text(intakeNumbers[catIntakeTypes[i]]).attr("id", catIntakeTypes[i].replace(" ", "")).attr("visibility", "hidden");
+}
+            
+            // Mouseover and Mouseoff Events for everything
+            for(var i = 0; i < catIntakeTypes.length; i++){
+                catIntakeTypes[i] = catIntakeTypes[i].replace(" ", "");
+            }
+            console.log(catIntakeTypes);
+            
+            catIntakeTypes.forEach(function(type){
+            
+                var element = d3.selectAll("#"+type);
+                
+                element.on("mouseover", function(e){
+                    console.log("went here");
+                    d3.selectAll("#"+type).attr("visibility", "visible");
+                    d3.select(this).attr("cursor", "pointer").attr("r", 12);
+                
+                });
+                element.on("mouseout", function(e){
+                    d3.selectAll("#"+type).attr("visibility", "hidden");
+                    d3.selectAll(".axis").attr("visibility", "visible");
+                    d3.select(this).attr("r", 10);
+                
+                    
+                });
+            });
+            
+        }
+        });
+     
+        
+    </script>
+
+</html>

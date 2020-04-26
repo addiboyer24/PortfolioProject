@@ -64,5 +64,29 @@ td{
     font-style:italic;
 }
 .github{
-    height:35px;
+    height:50px;
+    padding-left:20px;
+}
+.project-table td{
+    padding-left:20px;
+    padding-right:50px;
+}
+code{
+    background-color:white;
+    color:black;
+    font-family:Ubuntu;
+    font-size:14px;
+    text-align:left;
+}
+.dog-table{
+    margin-bottom:50px;
+}
+.dog-table img{
+    box-shadow:2px 2px gray;
+    width:250px;
+    height:250px;
+}
+.dog-table td{
+    padding-left:50px;
+    padding-right:50px;
 }

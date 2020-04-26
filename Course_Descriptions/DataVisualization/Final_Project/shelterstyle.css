@@ -1,0 +1,144 @@
+p{
+    font-size:20px;
+}
+a{
+    font-size:20px;
+    font-family:Courier New;
+}
+a:hover{
+    font-size:22px;
+}
+h1{
+    font-family:Courier New;
+    font-size: 32px; 
+}
+h2{
+   
+    font-style:none;
+    text-decoration:underline;
+    font-family:Times New Roman;
+    float:right;
+    padding-right:30px;
+    padding-bottom:0px;
+    font-size:28px;
+}
+
+.intake, .outcome{
+    font-family:Times New Roman;
+    font-size:17px;
+    fill:black;
+    r:1%;
+    opacity:1;
+}
+circle.intake{
+    opacity:1;
+}
+.intake{
+    fill:black;
+    text-decoration:none;
+    font-size:24px;
+    font-family:Times New Roman;
+}
+
+.bars{
+    fill:black;
+    font-size:20px;
+    font-family:Times New Roman, Courier New;
+    font-style:bold;
+}
+.axis{
+        font-size:20px; 
+    }
+
+.label{
+    font-family:Times New Roman;
+    font-size:18px;
+    stroke:black;
+    
+}
+.intake:hover{
+    r:1.25%;   
+}
+
+rect#Stray{
+    fill:lightgreen;
+}
+rect#EuthanasiaRequest{
+    fill:red;
+}
+rect#OwnerSurrender{
+    fill:gray;
+}
+rect#PublicAssist{
+    fill:blue;
+}
+
+circle#Stray{
+    fill:lightgreen;
+}
+circle#EuthanasiaRequest{
+    fill:red;
+}
+circle#OwnerSurrender{
+    fill:gray;
+}
+circle#PublicAssist{
+    fill:blue;
+}
+
+rect#Normal{
+    fill:lightgreen;
+}
+rect#Injured{
+    fill:red;
+}
+rect#Aged{
+    fill:gray;
+}
+rect#Sick{
+    fill:blue;
+}
+rect#Other{
+    fill:black;
+}
+rect#Feral{
+    fill:pink;
+}
+rect#Pregnant{
+    fill:brown;
+}
+rect#Nursing{
+    fill:yellow;
+}
+circle#Normal{
+    fill:lightgreen;
+}
+circle#Injured{
+    fill:red;
+}
+circle#Aged{
+    fill:gray;
+}
+circle#Sick{
+    fill:blue;
+}
+circle#Other{
+    fill:black;
+}
+circle#Feral{
+    fill:pink;
+}
+circle#Pregnant{
+    fill:brown;
+}
+circle#Nursing{
+    fill:yellow;
+}
+#axis{
+    font-size:22px;
+}
+text{
+    fill:black;
+    stroke:black;
+}
+

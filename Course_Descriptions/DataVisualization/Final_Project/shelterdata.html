@@ -1,0 +1,302 @@
+<!--DoctypeHTML-->
+<html>
+    
+    <head><title>Final Data Project</title>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="http://d3js.org/queue.v1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="shelterstyle.css">
+    </head>
+    
+        <body>
+            <h1>Intake Condition -> Outcome Type (Dogs)</h1>
+    <!--<h2>Hover over the intake conditions to reveal data</h2>-->
+    
+    
+        </body>
+    
+    <script>
+    queue().defer(d3.csv, 'aac_intakes_outcomes.csv').await(init);
+        
+        function init(err, data){
+            
+            var intakes, outcomes;
+            var intakeConditions, outcomeTypes;
+            var height = 1000, width = 1000;
+            var canvas = d3.select("body").append("svg").attr("height", height).attr("width", width).style("background-color", "white").style("align", "center"); 
+            
+            var dogIntakeCoordinates = [];
+            var dogOutcomeCoordinates = [];
+            console.log(data);
+            
+            
+            var dogs = [];
+            var cats = [];
+            
+            var intakes;
+            var outcomes;
+            
+            var conditions = {Normal:0,Injured:0,Aged:0,Sick:0,Other:0,Feral:0,Pregnant:0,Nursing:0};
+            
+            var types = {"Stray":0,"Public Assist":0,"Owner Surrender":0,"Euthanasia Request":0,"Wildlife":0};
+            var animal_type = {"Dog":0, "Cat":0, "Other":0, "Bird":0};
+            
+            var outcome_types = {"Return to Owner":0,"Transfer":0,"Adoption":0,"Euthanasia":0,"Died":0,"Rto-Adopt":0,"Missing":0,"Disposal":0,"Relocate":0};
+            
+            var conditionIndex = {Normal:0,Injured:1,Aged:2,Sick:3,Other:4,Feral:5,Pregnant:6,Nursing:7};
+            var outcomeTypeIndex = {"Return to Owner":0,"Transfer":1,"Adoption":2,"Euthanasia":3,"Died":4,"Rto-Adopt":5,"Missing":6,"Disposal":7,"Relocate":8};
+            
+            var xVal = 100; 
+            
+            for(var i = 0; i < Object.keys(conditionIndex).length; i++){
+                dogIntakeCoordinates.push([ 100*i+50, xVal]);
+                dogOutcomeCoordinates.push([100*i+50, width-125]);
+            }
+            
+            for(var i = 0; i < dogIntakeCoordinates.length; i++){
+                for(var j = 0; j < dogOutcomeCoordinates.length; j++){
+                    /*canvas.append("line").attr("x1", dogIntakeCoordinates[i][1]).attr("y1", dogIntakeCoordinates[i][0]).attr("x2", dogOutcomeCoordinates[j][1]).attr("y2", dogOutcomeCoordinates[j][0]).attr("stroke", "black").attr("opacity", 1).attr("stroke-width", .25).attr("class", "path").attr("opacity",0).attr("id", Object.keys(conditionIndex)[i]);*/
+                    
+                    
+                }
+            }
+            
+            // Draw the x-axis
+            canvas.append("line").attr("x1", width-125).attr("x2", width-125).attr("y1", 0).attr("y2",900).attr("stroke", "black").attr("class", "bars").attr("visibility","hidden").attr("id","axis").attr("stroke-width",.25);
+            // Draw the y-axis
+            //canvas.append("line").attr("x1", 100).attr("x2", width-125).attr("y1", 900).attr("y2",900).attr("stroke", "black").attr("class", "bars").attr("visibility","hidden").attr("id","axis").attr("stroke-width",.25);
+            
+            
+            
+            for (var i = 0; i < Object.keys(conditionIndex).length; i++){
+             canvas.append("circle").attr("cx", xVal).attr("cy",100*i+50).attr("r", 25).attr("stroke", "white").attr("class", "intake").attr("id",Object.keys(conditionIndex)[i]).attr("opacity",.10);
+                canvas.append("text").attr("x",xVal-30).attr("y",100*i+20).text(Object.keys(conditionIndex)[i]).attr("stroke", "black").attr("class", "intake");
+                
+            }
+            
+            xVal = width-125 ;
+            
+            for (var i = 0; i < Object.keys(outcomeTypeIndex).length; i++){
+               /*outcomes =  canvas.append("circle").attr("cx", xVal).attr("cy",100*i+50).attr("r", 25).attr("fill", "white").attr("stroke", "white").attr("class", "outcome").attr("id",Object.keys(outcome_types)[i]).attr("visibility","hidden");*/
+                canvas.append("text").attr("x",xVal+10).attr("y",100*i+50).text(Object.keys(outcomeTypeIndex)[i]).attr("stroke", "black").attr("class", "outcome").attr("visibility","hidden");
+            }
+            
+            
+            total = 0; 
+            data.forEach(function(d){
+               total+=1; 
+               conditions[d.intake_condition]+=1;
+                types[d.intake_type]+=1;
+                animal_type[d.animal_type]+=1;
+                
+                if(d.animal_type == "Cat"){
+                    cats.push(d);
+                }
+                if(d.animal_type == "Dog"){
+                    dogs.push(d);
+                }
+                                                                   
+            });
+            
+            // Total demographics for the shelter
+            console.log(types);
+            console.log(conditions);
+            console.log(animal_type);
+            
+            // Number of dogs and cats
+            console.log(dogs.length);
+            console.log(cats.length);
+            
+            // Clear conditions
+            conditions = clearData(conditions);
+            
+            // Create the array to store all the intake / outcome types
+            var dogsMatrix = new Array(Object.keys(conditions).length);
+            
+            for(var i = 0; i < dogsMatrix.length; i++){
+                dogsMatrix[i] = new Array(Object.keys(outcome_types).length-1);
+            }
+            
+            for(var i = 0; i < Object.keys(conditions).length; i++){
+                for(var j = 0; j < Object.keys(outcome_types).length; j++){
+                    dogsMatrix[i][j] = 0;
+                }
+            }
+            
+            dogs.forEach(function(dog){
+                conditions[dog.intake_condition]+=1;
+                outcome_types[dog.outcome_type]+=1;
+            dogsMatrix[conditionIndex[dog.intake_condition]][outcomeTypeIndex[dog.outcome_type]]+=1;
+            });
+            
+            
+            console.log(dogsMatrix);
+            var intake;
+            // Get the max and min
+            var max = 0, min = 100000;
+            console.log(Object.keys(conditions).length);
+            for(var i = 0; i < Object.keys(conditions).length; i++){
+                for(var j = 0; j < Object.keys(outcome_types).length-1; j++){
+                    if(dogsMatrix[i][j] == undefined){
+                        dogsMatrix[i][j] = 0;  
+                    }
+                    
+                    if(dogsMatrix[i][j] > max){
+                        max = dogsMatrix[i][j];
+                    }
+                    if(dogsMatrix[i][j] < min){
+                        min = dogsMatrix[i][j];
+}
+                    
+}
+            }
+            console.log("Dog matrix", dogsMatrix);
+            console.log("Max: " + max);
+            console.log("Min: " + min);
+           
+            // Create a scale for the data
+            
+            //canvas.append("line").attr("x1", )
+            var xScale = d3.scale.linear().domain([parseInt(min), parseInt(max)]).range([100,100-width-125]);
+            
+            console.log(outcome_types);
+            console.log("Length of outcome_types: " + Object.keys(outcome_types).length);
+            for(var i = 0; i < Object.keys(conditions).length; i++){
+                for(var j = 0; j < Object.keys(outcome_types).length-1; j++){
+                    
+                    
+                //var xScale = d3.scale.linear().domain([0, parseInt(max)]).range([100,100-width-125]);
+                    canvas.append("circle").attr("cx",width-125-parseInt(dogsMatrix[i][j]/30)).attr("cy", j*100+60).attr("r",2.5).attr("class","bars").attr("id", Object.keys(conditions)[i]).attr("visibility", "hidden").attr("fill", "black").attr("stroke", "black");
+                    
+                    /*canvas.append("line").attr("x1", width-125-parseInt(dogsMatrix[i][j]/20)).attr("y1", j*100+55).attr("x2", width-125-parseInt(dogsMatrix[i][j]/20)).attr("y2", j*100+65).attr("stroke", "gray").attr("class", "bars").attr("id", Object.keys(conditions)[i]).attr("visibility", "hidden").attr("stroke-width",1);*/
+                    
+                    rectWidth = xScale(parseInt(dogsMatrix[i][j]));
+                    console.log(dogsMatrix[i][j]);
+                    console.log("rectangle width: " + rectWidth);
+                    canvas.append("rect").attr("x", width-125-parseInt(dogsMatrix[i][j])/30).attr("y", j*100+60).attr("width", parseInt(dogsMatrix[i][j])/30).attr("height",1.5).attr("class", "bars").attr("id", Object.keys(conditions)[i]).attr("stroke", "black").attr("visibility","hidden");
+                    canvas.append("text").attr("x", width-125-parseInt(dogsMatrix[i][j])/30-50).attr("y", j*100+50).text((dogsMatrix[i][j]/conditions[Object.keys(conditions)[i]]*100).toFixed(1) + "%").attr("id", Object.keys(conditions)[i]).attr("visibility", "Hidden").attr("class", "labels");
+                }
+            }
+            
+            // Draw white gridlines
+            for(var i = 1; i < 6; i++){
+                canvas.append("line").attr("x1", width-125-i*125).attr("x2", width-125-i*125).attr("y1", 0).attr("y2",910).attr("stroke", "white").attr("class", "bars").attr("visibility","hidden").attr("id","axis").attr("stroke-width",4);
+            }
+            // Draw the ticks
+            for(var i = 0; i < 7; i++){
+                canvas.append("line").attr("x1", width-125-i*125).attr("x2", width-125-i*125).attr("y1", 890).attr("y2",900).attr("stroke", "gray").attr("class", "bars").attr("visibility","hidden").attr("id","axis").attr("stroke-width",1);
+                canvas.append("text").attr("x", width-125-i*125).attr("y", 925).text(i*30*125).attr("id", "axis").attr("class", "bars").attr("visibility", "hidden").style("font-style", "bold");
+            }
+            
+           canvas.append("text").attr("x", width/2).attr("y", 975).text("Number of Dogs (2013 - 2018)").attr("class", "bars").attr("id","axis").attr("visibility", "hidden");
+            
+            canvas.append("text").attr("x", width-100).attr("y", height/2).text("Outcome").attr("class", "bars").attr("id","axis").attr("visibility", "hidden");
+           
+            /*canvas.append("line").attr("x1",width-125-19444/30).attr("x2", width-125-19444/30).attr("y1", 0).attr("y2",900).attr("stroke", "black").attr("class", "bars").attr("visibility","hidden").attr("id","axis").attr("stroke-width",1);*/
+                /*canvas.append("text").attr("x", width-125-19444/30).attr("y", 925).text(19444).attr("id", "axis").attr("class", "bars").attr("visibility", "hidden");*/
+            
+            
+            // Fill in the data
+            for(var i = 0; i < dogsMatrix.length; i++){
+                canvas.append("text").attr("x",25).attr("y",100*i+50).text(conditions[Object.keys(conditionIndex)[i]]).attr("stroke", "black").attr("class", "bars").attr("visibility", "hidden").attr("id", Object.keys(conditions)[i]).style("fill", "black");
+                
+                for(var j = 0; j < dogsMatrix[0].length; j++){
+                    //console.log(dogsMatrix[i][j]);
+                    console.log(Object.keys(conditions)[i]);
+                    console.log(Object.keys(outcome_types)[j]);
+                    
+                    intake = d3.selectAll("#"+Object.keys(conditions)[i]);
+                    console.log(intake);
+                    console.log(intake.attr("cx"));
+                    console.log(intake.attr("cy"));
+                    
+                    
+                   
+                }
+                
+                
+}
+            console.log(conditions);
+            conditions = clearData(conditions);
+            console.log(outcome_types);
+            outcome_types = clearData(outcome_types);
+            
+            // Create the array to store all the intake / outcome types
+            var catsMatrix = new Array(Object.keys(conditions).length);
+            
+            for(var i = 0; i < catsMatrix.length; i++){
+                catsMatrix[i] = new Array(Object.keys(outcome_types).length);
+            }
+            
+            console.log(catsMatrix);
+            
+            cats.forEach(function(cat){
+                conditions[cat.intake_condition]+=1;
+                outcome_types[cat.outcome_type]+=1;
+                
+            });
+            
+            console.log(outcome_types);
+            console.log(conditions);
+            
+            function clearData(data){
+           
+                var keys = Object.keys(data);
+                
+                keys.forEach(function(key){
+                    data[key] = 0; 
+                });
+                
+                return data; 
+            }
+            
+            Object.keys(conditionIndex).forEach(function(key){
+                var conditionElement = d3.selectAll("#"+key);
+                conditionElement.on("mouseover", function(e){
+                    
+                    d3.selectAll("#"+key).attr("opacity", 1).attr("visibility", "visible");
+                    //d3.selectAll("text").attr("visibility","visible");
+                    d3.select(this).attr("cursor", "pointer");
+                    d3.selectAll("#axis").attr("visibility", "visible");
+                    d3.selectAll(".outcome").attr("visibility", "visible");
+                    
+                });
+                
+                    conditionElement.on("mouseout", function(e){
+                    d3.selectAll("#"+key).attr("opacity", .10);
+                    d3.selectAll(".bars").attr("visibility", "hidden");
+                    d3.selectAll(".path").attr("opacity", 0);
+                    d3.selectAll(".labels").attr("visibility", "hidden");
+                    d3.selectAll(".outcome").attr("visibility", "hidden");
+                });
+           
+            });
+            
+            console.log(dogsMatrix);
+             /*
+            intakeConditions.on("mouseover", function(e){
+                // Handle mouseover event;
+                
+            });
+            intakeConditions.on("mouseout", function(e){
+                // Handle mouseout event 
+            });
+            
+            outcomeTypes.on("mouseover", function(e){
+                
+                // Handle mouseover event
+            });
+            outcomeTypes.on("mouseout", function(e){
+                // Handle mouseout event
+            });*/
+            
+            console.log(outcome_types);
+                         }
+        
+        
+        
+        
+     
+        
+    </script>
+
+</html>

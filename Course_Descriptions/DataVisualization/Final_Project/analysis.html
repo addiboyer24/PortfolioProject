@@ -1,0 +1,25 @@
+<!--DoctypeHTML-->
+<html>
+    
+    <head><title>Analysis</title>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="http://d3js.org/queue.v1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="shelterstyle.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+        <style>
+            
+        </style>
+    </head>
+    
+    <body>
+        
+        <h1>Analysis</h1>
+        <p>The dataset was composed of approximately 80,000 animal records from the Austin Texas animal shelter.  The shelter claims to be one of the biggest no-kill animal shelters in the world.  The goal of my project was to investigate this claim, while creating a tool to visualize their data.  First, I sorted the data by animal type (dogs in one array, cats in the other). </p><center><img src="dogcat.png"></center><p>After this I wanted to count the number of animals that ended up at a certain outcome based on an intake characteristic.  I decided to focus on Intake Type, and Intake Condition primarily to investigate my hypothesis.</p><center><img src="Array1.png"> <img src="Array2.png"></center><p>To get the counts I used a dictionary with Intake Types, and Intake Conditions as keys.  I initialized each value to 0, then for each cat/dog I incremented its value in the dictionary.  With this information, I made a matrix holding each intersection of Intake Type and Intake Condition,  For example, if an animal has Intake Condition 0 and Outcome Type 0, then index 0,0 in the matrix would be incremented.</p><center><img src="matrix.png"></center>
+        <a href="Final3.html">Back to Visual 4 >></a>
+        <center><a href="goodbadexample.html">Good and Bad Examples >></a></center>
+
+    
+    </body>
+    
+</html>
