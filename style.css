@@ -67,8 +67,13 @@ td{
     height:50px;
     padding-left:20px;
 }
+.project-table{
+    width:100%;
+    float:right;
+}
 .project-table td{
     padding-bottom:10px;
+    padding-left:20px;
 }
 code{
     background-color:white;
@@ -97,4 +102,7 @@ code{
 }
 .waldo-table img{
     padding-top:30px;
+}
+.faculty-photo{
+    height:150px;
 }
