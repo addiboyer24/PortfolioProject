@@ -68,8 +68,7 @@ td{
     padding-left:20px;
 }
 .project-table td{
-    padding-left:20px;
-    padding-right:50px;
+    padding-bottom:10px;
 }
 code{
     background-color:white;
