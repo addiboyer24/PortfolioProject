@@ -89,3 +89,12 @@ code{
     padding-left:50px;
     padding-right:50px;
 }
+.bio-table td{
+    padding-right:100px;
+}
+.waldo-table td{
+    padding-right:75px;
+}
+.waldo-table img{
+    padding-top:30px;
+}

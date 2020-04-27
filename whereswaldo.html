@@ -22,7 +22,41 @@
             <h1 class='text-center page-header'>Where's Waldo?<a target='_blank' href='https://github.com/addiboyer24/project_3-mini-project'><img class='github' src='images/github.svg'></a></h1>
 
             <div class='row'>
-                
+                <div class='col-md-2'></div>
+                <div class='col-md-8'>
+                    <h4 class='text-left'>So far, we've mostly focused on using imagery to do stuff for which it is better suited than a human: calculating camera locations from imagery, finding an optimal projective transform to stitch images together, and (soon) we'll be doing "structure from motion" in which we create 3D models of the world from collections of 2D images.
+                         These are tasks primarily based around measuring things and doing calculations. On the other side of the coin is object recognition (identifying the semantic content of a scene), and the best contemporary computer vision algorithms do object recognition at roughly the level of a 2 year old human (with some exceptions).
+                         For this (mini-)project, we're going to delve into a topic that sort of straddles the line between these two general realms of computer vision.
+                        <br><br>
+                        As a motivating example, did you ever play the game Where's Waldo. There are books filled with images like the following:
+                        <center><img style='box-shadow:2px 2px gray;' src='./Course_Descriptions/ComputerVision/waldo_1.jpg'></center>
+                        <br>
+                        The objective, of course, is to find Waldo, the man in the red striped shirt and beanie wearing glasses. He looks like this:
+                        <center><img style='box-shadow:2px 2px gray;' src='./Course_Descriptions/ComputerVision/waldo_template.jpg'></center>
+                        <br><br>
+                        These scenes are (obviously) intended to have a bunch of visual clutter to make this task reasonably challenging.
+                        <br><br>
+                        Your task will be to come up with an algorithm that locates the template image (Waldo's face) and the target image (the larger scene). This is called template matching, and it's a primitive form of feature recognition.
+                        </h4>
+                </div>
+                <div class='col-md-2'></div>
+            </div>
+
+            <h2 class='text-center page-header'>Implementation</h2>
+            <div class='row'>
+                <div class='col-md-2'></div>
+                <div class='col-md-8'>
+                    <h3 class='text-left'><b>Template Matching</b></h3>
+                    <h4 class='text-left'>Description of Template Matching here..</h4>
+                    <center>
+                        <table class='waldo-table'>
+                        <tr>
+                            <td><h4 class='text-left'>Image Pyramid: </h4><img style='padding-top:0px;'src='./Course_Descriptions/ComputerVision/imagepyramid.PNG'></td><td><img src='./Course_Descriptions/ComputerVision/gaussian reduction.PNG'><br><img src='./Course_Descriptions/ComputerVision/imagepyramidcode.PNG'></td>
+                        </tr>
+                        </table>
+                    </center>
+                </div>
+                <div class='col-md-2'></div>
             </div>
         </div> 
     </body>

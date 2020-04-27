@@ -23,7 +23,46 @@
 
             <div class='row'>
                 <div class='col-md-2'></div>
-                <div class='col-md-10'></div>
+                <div class='col-md-8'>
+                    <h4 class='text-left'><b>GRAD CHALLENGE 3 (CLUSTERING MS SPECTRA):</b> Read in a .mgf file <a target='_blank' href='https://bitbucket.org/orserang/sweetseqer/raw/419ba47268e168607282229c9c8c67deb1cf7675/data/120810_JF_HNU142_5.mgf'>(example here)</a> 
+                        containing many thousand MS/MS spectra. Look only at the fragmentation peaks (not any precursor information). Discretize into m/z bins (by rounding) of 0.01 Th and cluster together the mass spectra. 
+                        Your goals are <b>(1)</b> for each cluster has spectra that are not far from one another (using L2 distance) and 
+                        <b>(2)</b> for spectra in different clusters are far from one another (using L2 distance).
+                        <br><br>
+                        Your program will accept one argument, the name of the .mgf file. Your program will print the clusters by referring to the indices of the spectra in the .mgf file on the same line. For example, the output
+                        <br><br>
+                        <table class='bio-table'>
+                        <tr>
+                        <td>
+                        &emsp;&emsp;0&emsp; 1&emsp; 3&emsp; 8<br><br>
+                        &emsp;&emsp;2&emsp; 4&emsp; 5<br><br>
+                        &emsp;&emsp;6&emsp; 7<br><br>
+                        &emsp;&emsp;9</td>
+                        <td><img style='width:350px; float:right; box-shadow:2px 2px gray;' src='./Course_Descriptions/IntroToBioinformatics/bio.jpg'></td>
+                        </tr></table><br><br>
+                        has clusters {0,1,3,8}, {2,4,5}, {6,7}, and {9}. Distance between spectrum 0 and spectrum 1 will penalize this result, while distance between spectrum 0 and spectrum 2 will reward this result. Spectra unassigned to a cluster will be put into cluster 0. The winner will be selected by an 
+                        <a target='_blank' href='https://en.wikipedia.org/wiki/F-test'>F-test</a>. Your code must run in less than 10 minutes on several thousand spectra (with # peaks roughly equal to one of the example spectra above). Deviate from the output format at your own risk.
+                        <br><br>
+                        Make your code from scratch with <b>no imported libraries</b> (exception: C++ code may use the standard library and python may use numpy). C++ entries will be compiled using the flags specified above.
+                    </h4>
+                    
+                </div>
+                <div class='col-md-2'></div>
+            </div>
+
+            <h2 class='text-center page-header'>Implementation</h2>
+            <div class='row'>
+                <div class='col-md-2'></div>
+                <div class='col-md-8'>
+                    <h3 class='text-left'><b>Locality Sensitive Hashing (LSH)</b></h3>
+                    <h4 class='text-left'>Description of LSH here..</h4>
+                    <center>
+                        <figure>
+                        <table class='bio-table'><tr><td><h4 class='text-left'>Sample input: <a target='_blank' href='./code/spectre.mgf'>spectre.mgf</a></h4><img src='./Course_Descriptions/IntroToBioinformatics/sample.PNG'></td><td><img src='./Course_Descriptions/IntroToBioinformatics/lsh.PNG'></td></tr></table>
+                    <figcaption><h4 class='text-center'>Full implementation: <a target='_blank' href='./code/spectre.py'>spectre.py</a></h4></figcaption>
+                    </figure>
+                    </center>
+                </div>
                 <div class='col-md-2'></div>
             </div>
         </div> 
