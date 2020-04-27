@@ -22,7 +22,37 @@
             <h1 class='text-center page-header'>Shell Scripting</h1>
 
             <div class='row'>
-                
+                <div class='col-md-2'></div>
+                <div class='col-md-8'>
+                    <h4 class='text-left'><b>[Level 2]</b> Write the shortest assembly program that you can that
+                        launches a UNIX shell. The program should produce machine code
+                        (visible using objdump -D that is as short as possible). Your program
+                        may not use the .string directive; instead, it must launch the shell
+                        code without such a hard-coded string.</h4>
+                </div>
+                <div class='col-md-2'></div>
+            </div>
+
+            <h2 class='text-center page-header'>Implementation</h2>
+            <div class='row'>
+                <div class='col-md-2'></div>
+                <div class='col-md-8'>
+                    <figure> 
+                        <code>
+                            &emsp;&emsp;.global main<br>
+                            main:<br>
+                            &emsp;&emsp;movabs $0x68732f6e69622fff, %rax<br>
+                            &emsp;&emsp;shr $8, %rax<br>
+                            &emsp;&emsp;pushq %rax<br>
+                            &emsp;&emsp;movq %rsp, %rdi<br>
+                            &emsp;&emsp;xorl %eax, %eax<br>
+                            &emsp;&emsp;movb $59, %al<br>
+                            &emsp;&emsp;syscall<br>
+                        </code>
+                        <figcaption><h4 class='text-left'>Source code: <a target='_blank'>Boyer_Addison.S</a></h4></figcaption>
+                    </figure>
+                </div>
+                <div class='col-md-2'></div>
             </div>
         </div> 
     </body>
