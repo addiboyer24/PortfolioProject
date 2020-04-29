@@ -28,7 +28,7 @@ h2{
 }
 
 .nav-item:hover{
-    box-shadow: 2px 2px #70002e;
+    box-shadow: 2px 2px gray;
     height:180px;
 }
 
@@ -41,9 +41,10 @@ h2{
 }
 
 .jumbotron{
-
-    padding-top:60px;
-    padding-bottom:60px;
+    
+    padding-top:10px;
+    padding-bottom:10px;
+    background-color:white;
 }
 
 .video-table{
@@ -105,4 +106,21 @@ code{
 }
 .faculty-photo{
     height:150px;
+}
+
+.about-me img{
+    height:300px;
+}
+.about-me td{
+    padding-left:50px;
+}
+.heading-table{
+    padding-right:20px;
+    margin-bottom:50px;
+}
+.heading-table img{
+    height:100px;
+}
+.csp-table td{
+    padding-bottom:20px;
 }
