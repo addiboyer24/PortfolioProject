@@ -63,15 +63,77 @@
                     <center>
                         <table class='waldo-table'>
                         <tr>
-                            <td><img style='padding-top:0px;'src='./Course_Descriptions/ComputerVision/imagepyramid.PNG'></td><td><img src='./Course_Descriptions/ComputerVision/gaussian reduction.PNG'><br><img src='./Course_Descriptions/ComputerVision/imagepyramidcode.PNG'></td>
+                        <td><img src='./Course_Descriptions/ComputerVision/imagepyramid.PNG'></td>
+                            <td>
+                            <pre style='font-size:13px;'>
+# Function to perform the gaussian reduction
+def reduce(template, a=.4, b=.25, c=.10):
+    
+    h = template.shape[0]
+    w = template.shape[1]
+    reduced = np.zeros((h//2, w//2))
+    for i in range(2,h-2):
+        for j in range(2,w-2):
+            pixel_w = a*template[i][j] + b*template[i+1][j] + b*template[i-1][j] + c*template[i-2][j] + c*template[i+2][j]
+            pixel_h = a*template[i][j] + b*template[i][j+1] + b*template[i][j-1] + c*template[i][j+2] + c*template[i][j-2]
+            reduced[i//2][j//2] = (pixel_w + pixel_h) / 2
+    
+    # Just cut off the image border, it's easier this way
+    new_h = reduced.shape[0]-4
+    new_w = reduced.shape[1]-4
+    trimmed = np.zeros((new_h, new_w))
+    trimmed = reduced[2:reduced.shape[0]-2, 2:reduced.shape[1]-2]
+    return trimmed
+                            </pre>
+                            <br>
+                            <pre style='font-size:13px;'>
+# Function that creates the image pyramid calling the gaussian reduction
+def create_pyramid(template):
+    image_pyramid = []
+    image_pyramid.append(template)
+    while(template.shape[0] > 25):
+        template = reduce(template)
+        image_pyramid.append(template)
+        
+        
+    return image_pyramid
+
+image_pyramid = create_pyramid(waldo_template)
+                            </pre>
+                            </td>
                         </tr>
                         </table>
                     </center>
-                    <h3 class='text-center'><b>Finding Waldo :)</b></h3>
+                    <h3 class='text-center'><b>There's Waldo!</b></h3>
                     <center>
                         <table class='waldo-table'>
                             <tr>
-                                <td><img src='./Course_Descriptions/ComputerVision/waldoalg.PNG'></td><td><img src='./Course_Descriptions/ComputerVision/waldofind.PNG'></td>
+                                <td><pre style='font-size:13px;'>
+# Find waldo
+# Height and width of waldo_1.jpg
+map_height = waldo_1.shape[0]
+map_width = waldo_1.shape[1]
+                                    
+# Variables to store best_sse, and i,j of best_sse
+best_sse = np.inf
+best_location = None
+                                    
+for template in image_pyramid:
+    temp_h = template.shape[0]
+    temp_w = template.shape[1]
+    print("Searcing for waldo with template of size :", (temp_h, temp_w))
+    for i in range(temp_h, map_height):
+        for j in range(temp_w, map_width):
+            image_patch = waldo_1[i-temp_h:i, j-temp_w:j]
+            sse = imp.sum_squared_error(template, image_patch)
+            if(sse < best_sse):
+                best_sse = sse
+                best_location = [(i-temp_h,j-temp_w), template]
+                                    
+# Finished now print the best location!
+print("Found waldo at: ", best_location[0])
+
+                                </pre></td><td><img src='./Course_Descriptions/ComputerVision/waldofind.PNG'><h4 class='text-center'>Shows the proposed location of Waldo!</h4></h4></td>
                             </tr>
                         </table>
                     </center>
