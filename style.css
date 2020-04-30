@@ -1,3 +1,4 @@
+
 .panel-title{
     font-style:italic;
     padding-top:10px;
@@ -44,7 +45,6 @@ h2{
     
     padding-top:10px;
     padding-bottom:10px;
-    background-color:white;
 }
 
 .video-table{
@@ -83,6 +83,9 @@ code{
     font-size:18px;
     text-align:left;
 }
+pre{
+    font-size:15px;
+}
 .dog-table{
     margin-bottom:50px;
 }
@@ -104,6 +107,9 @@ code{
 .waldo-table img{
     padding-top:30px;
 }
+.waldo-table{
+    margin-bottom:40px;
+}
 .faculty-photo{
     height:150px;
 }
@@ -123,4 +129,10 @@ code{
 }
 .csp-table td{
     padding-bottom:20px;
+}
+.shell-table{
+    margin-bottom:50px;
+}
+.shell-table td{
+    padding-left:50px;
 }

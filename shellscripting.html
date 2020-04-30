@@ -24,11 +24,16 @@
             <div class='row'>
                 <div class='col-md-2'></div>
                 <div class='col-md-8'>
-                    <h4 class='text-left'><b>[Level 2]</b> Write the shortest assembly program that you can that
+                    <table class='shell-table'>
+                    <tr>
+                    <td><h4 class='text-left'><b>[Level 2]</b> Write the shortest assembly program that you can that
                         launches a UNIX shell. The program should produce machine code
                         (visible using objdump -D that is as short as possible). Your program
                         may not use the .string directive; instead, it must launch the shell
-                        code without such a hard-coded string.</h4>
+                        code without such a hard-coded string.</h4></td>
+                        <td><img style='height:225px;' src='./images/second.png'></td>
+                    </tr>
+                    </table> 
                 </div>
                 <div class='col-md-2'></div>
             </div>
@@ -37,20 +42,43 @@
             <div class='row'>
                 <div class='col-md-2'></div>
                 <div class='col-md-8'>
-                    <figure> 
-                        <code>
-                            &emsp;&emsp;.global main<br>
-                            main:<br>
-                            &emsp;&emsp;movabs $0x68732f6e69622fff, %rax<br>
-                            &emsp;&emsp;shr $8, %rax<br>
-                            &emsp;&emsp;pushq %rax<br>
-                            &emsp;&emsp;movq %rsp, %rdi<br>
-                            &emsp;&emsp;xorl %eax, %eax<br>
-                            &emsp;&emsp;movb $59, %al<br>
-                            &emsp;&emsp;syscall<br>
-                        </code>
-                        <figcaption><h4 class='text-left'>Source code: <a target='_blank'>Boyer_Addison.S</a></h4></figcaption>
-                    </figure>
+                    <h3 class='text-center'><b>Digital Forensics</b></h3>
+                    <center>
+                    <table class='shell-table'>
+                        <tr>
+                        <td><figure> 
+                            <pre>
+    .global main
+main:
+    movabs $0x68732f6e69622fff, %rax
+    shr $8, %rax
+    pushq %rax
+    movq %rsp, %rdi
+    xorl %eax, %eax
+    movb $59, %al
+    syscall
+                            </pre>
+                            <figcaption><h4 class='text-center'><b>Source code:</b> <a target='_blank'>Boyer_Addison.S</a></h4></figcaption>
+                        </figure></td>
+                        <td>
+                            <figure>
+                                <figcaption><h4 class='text-center'><b>gcc -c Boyer_Addison.S</b></h4></figcaption>
+                            <pre>
+   0:   48 b8 ff 2f 62 69 6e    movabs $0x68732f6e69622fff,%rax
+   7:   2f 73 68
+   a:   48 c1 e8 08             shr    $0x8,%rax
+   e:   50                      push   %rax
+   f:   48 89 e7                mov    %rsp,%rdi
+  12:   31 c0                   xor    %eax,%eax
+  14:   b0 3b                   mov    $0x3b,%al
+  16:   0f 05                   syscall
+                            </pre>
+                            <figcaption><h4 class='text-center'><b>objdump -D Boyer_Addison.o</b></h4></figcaption>
+                            </figure>
+                        </td>
+                        </tr>
+                    </table>
+                </center>
                 </div>
                 <div class='col-md-2'></div>
             </div>

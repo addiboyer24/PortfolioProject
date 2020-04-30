@@ -47,12 +47,32 @@
                 <div class='col-md-2'></div>
                 <div class='col-md-8'>
                     <h3 class='text-left'><b>Template Matching</b></h3>
-                    <h4 class='text-left'>Description of Template Matching here..</h4>
+                    <h4 class='text-left'>Template matching works in a way that is very similar to filtering: slide the template image over every location in the target image, computing some sort of metric at each position.
+                         In practice, one commonly used choice for an error metric is the one that you've already used for matching keypoint descriptors: z-normalized sum square error.
+                          Another choice is <a target='_blank' href='https://en.wikipedia.org/wiki/Cross-correlation#Normalization'>normalized cross-correlation</a>.
+                           Once these metrics have been computed, simply find the argmin (for SSE) or argmax (for NCC), and this will be the location of the best match.</h4>
+
+                    <h3 class='text-lef'><b>Not so fast!!! What about scale!</b></h3>
+                    <h4 class='text-left'>Oh, no. As it turns out, the template I've provided is not the same scale as the Waldo in the image.
+                         To deal with this, you'll need to create an image pyramid for the template (See Szeliski 3.5, and <a target='_blank' href='https://www.youtube.com/watch?v=KO7jJt0WHag&feature=youtu.be'>Mubarak Shah's lecture on this topic</a>).
+                          This essentially just means creating a sequence of downsampled images of the template, and trying each one in hopes that one of the resulting down-scaled templates matches the feature in the target image.
+                           <b>Create a sequence of templates with which to perform feature matching, each one 1/2 the resolution of the previous (so 1/4 the total number of pixels).
+                            To avoid aliasing, before downsampling perform a &sigma;=1 Gaussian Blur of the image. Once you've built your image pyramid, find the argmin/max in 3 dimensions (u,v,template scale)</b>.</h4>
+                    
+                    <h3 class='text-center'><b>Image Pyramids and Gaussian Reductions</b></h3>
                     <center>
                         <table class='waldo-table'>
                         <tr>
-                            <td><h4 class='text-left'>Image Pyramid: </h4><img style='padding-top:0px;'src='./Course_Descriptions/ComputerVision/imagepyramid.PNG'></td><td><img src='./Course_Descriptions/ComputerVision/gaussian reduction.PNG'><br><img src='./Course_Descriptions/ComputerVision/imagepyramidcode.PNG'></td>
+                            <td><img style='padding-top:0px;'src='./Course_Descriptions/ComputerVision/imagepyramid.PNG'></td><td><img src='./Course_Descriptions/ComputerVision/gaussian reduction.PNG'><br><img src='./Course_Descriptions/ComputerVision/imagepyramidcode.PNG'></td>
                         </tr>
+                        </table>
+                    </center>
+                    <h3 class='text-center'><b>Finding Waldo :)</b></h3>
+                    <center>
+                        <table class='waldo-table'>
+                            <tr>
+                                <td><img src='./Course_Descriptions/ComputerVision/waldoalg.PNG'></td><td><img src='./Course_Descriptions/ComputerVision/waldofind.PNG'></td>
+                            </tr>
                         </table>
                     </center>
                 </div>

@@ -22,7 +22,103 @@
             <h1 class='text-center page-header'>ASL Classification<a target='_blank' href='https://github.com/addiboyer24/Boyer_Addison_MachineLearningFinal'><img class='github' src='images/github.svg'></a></h1>
 
             <div class='row'>
-                
+                <div class='col-md-2'></div>
+                <div class='col-md-8'>
+                    <center>
+                        <img src='./Course_Descriptions/MachineLearning/amer_sign2.png'>
+                        <h4 class='text-center'>The American Sign Language Fingerspelling Alphabet</h4>
+                    </center>
+                    <h3 class='text-left'><b>Overview</b></h3>
+                    <h4 class='text-left'>One of the primary goals for CSCI547 is to give you some experience in applying the algorithms that we learn about in Machine Learning to a variety of problems, perhaps in your
+                        particular area of specialization. The final project for this course is designed to give you an
+                        opportunity to apply the machine learning skills you've learned to a non-trivial problem of
+                        interest.
+                        </h4>
+                    <h3 class='text-left'><b>Project Scope</b></h3>
+                    <h4 class='text-left'>Your project will entail the application of a machine learning technique to a dataset. You
+                        may apply a technique that we learned about in class to a dataset that we haven't seen
+                        before, or you may apply an algorithm that you would like to research on your own to one
+                        of the datasets we've seen in class, or you may try something entirely new. For obvious
+                        reasons, it will not be allowed to apply an algorithm we learned about in class to a dataset
+                        we used in class.</h4>
+
+                    <h3 class='text-left'><b>Deliverables</b></h3>
+                    <h4 class='text-left'>Once you've identified the scope of your project, you should write a code base that represents
+                        a working machine learning model. This code base should not only deal with training
+                        the model, but also include elements of validation and model selection indicating a deep
+                        exploration of the chosen method and dataset. <b>In addition to the code, you will need
+                        to prepare a paper consisting of a literature review framing the problem that
+                        you are trying to solve (you should read and cite at least 2 papers, but probably
+                        more), methods, results, discussion, and conclusions</b>. There is no specified length for
+                        this paper, but it does need to be long enough to justify the work that you did! As with all
+                        scientific writing, well-made figures are a highly welcome inclusion.</h4>
+                    
+                </div>
+                <div class='col-md-2'></div>
+            </div>
+
+            <h2 class='text-center page-header'>Implementation</h2>
+            <div class='row'>
+                <div class='col-md-2'></div>
+                <div class='col-md-8'>
+                    <h3 class='text-center'><b>Convolutional Neural Networks</b></h3>
+                    <figure>
+                    <pre>
+class Net(nn.Module):
+    
+    def __init__(self, N, n_input):
+        
+        super(Net, self).__init__()
+        
+        self.conv_layer = nn.Sequential(
+            # Conv Layer block 1
+            nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2), 
+            
+            # Conv Layer block 2
+            nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2), 
+            
+            # Conv Layer block 3
+            nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+        )
+        
+        self.fc_layer = nn.Sequential(
+            nn.Dropout(p=0.1),
+            nn.Linear(2304, 1024),
+            nn.ReLU(inplace=True),
+            nn.Linear(1024, 512),
+            nn.ReLU(inplace=True),
+            nn.Dropout(p=0.1),
+            nn.Linear(512, N)
+        )
+        
+    def forward(self, x):
+            
+        x = self.conv_layer(x)
+            
+        x = x.view(x.size(0), -1) # Flatten output of conv layer
+            
+        x = self.fc_layer(x)
+            
+        return x #logits
+                    </pre>
+                <figcaption><h4 class='text-center'>The proposed network architecture for classifying ASL fingerspellings.  The entrie implementation is on <a target='_blank' href='https://github.com/addiboyer24/Boyer_Addison_MachineLearningFinal/blob/master/AddisonCodeBase.py'>GitHub</a>.</a></h4></figcaption>
+                </figure> 
+                    <h3 class='text-center'><b>Research Paper</b></h3>
+                    <embed style='width:100%; height:750px; padding-bottom:50px;' src="./Course_Descriptions/MachineLearning/Boyer_Addison_Final.pdf"></embed>
+                </div>
+                <div class='col-md-2'></div>
             </div>
         </div> 
     </body>
