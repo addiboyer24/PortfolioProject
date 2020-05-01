@@ -1,4 +1,7 @@
 
+.profile-table td{
+    padding-right:20px;
+}
 .panel-title{
     font-style:italic;
     padding-top:10px;
@@ -135,4 +138,16 @@ pre{
 }
 .shell-table td{
     padding-left:50px;
+}
+
+.onus-table td{
+    padding-right:30px;
+}
+.onus-table{
+    margin-top:50px;
+    margin-bottom:50px;
+}
+.onus-table img{
+    border-radius:30px;
+    height:500px;
 }
