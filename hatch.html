@@ -22,7 +22,74 @@
             <h1 class='text-center page-header'>Hatch<a target='_blank' href='https://github.com/addiboyer24/Hatch'><img class='github' src='images/github.svg'></a></h1>
 
             <div class='row'>
-                
+                <div class='col-md-2'></div>
+                <div class='col-md-8'>
+                    <h4 class='text-left'><b>Create a programming language of your choice</b> that will accomplish some computational task. Utilizing the C packages Flex and Bison, define a grammar for your language in the Backus-Naur form. Clearly define the tokens of your language and their types, as well as any rules your language will follow.</h4>
+                    <h2 class='text-center page-header'>Implementation</h2>
+                    <h4 class='text-left'>For my programming language, I chose to create a preprocessor for Python called Hatch.
+                          Hatch simplifies the syntax needed to define classes in Python.
+                            Before being interpreted as Python code the .Hatch file is converted to a .py file, and in the process replaces Hatch statements with valid Python code.  In order to accomplish this task, regular expressions
+                        are used to parse the language and are defined in the .l (Lex) file.  A grammar tree for the language also needs to be defined in the .y (Yacc) file.</h4>
+                        <center><img src='./Course_Descriptions/NaturalLanguageProcessing/hatchchick.jpg'></center>
+                            <br>
+                            <figure>
+                                <figcaption><h4 class='text-center'><b>Some regular expressions used by Hatch to parse input.</b></h4></figcaption>
+                                <pre>
+"#!"                        {yylval.sVal = strdup(yytext); return START;}
+
+","                         {yylval.sVal = strdup(yytext); return COMMA;}
+
+[0-9]+                      {yylval.sVal = strdup(yytext); return NUM_I;}
+
+[1-9]+[0-9]?\.[0-9]+        {yylval.sVal = strdup(yytext); return NUM_F;}
+
+[0]?\.[0-9]+                {yylval.sVal = strdup(yytext); return NUM_F;}
+
+\"[a-zA-Z0-9 \\t\\n]+\"     {yylval.sVal = strdup(yytext); return STRING;}
+
+\'[a-zA-Z0-9 \\t\\n]+\'     {yylval.sVal = strdup(yytext); return STRING;}
+
+"get"                       {yylval.sVal = strdup(yytext); return GET;}
+
+"set"                       {yylval.sVal = strdup(yytext); return SET;}
+
+"class"                     {yylval.sVal = strdup(yytext); return CLASS;}
+
+"str"                       {yylval.sVal = strdup(yytext); return STR;}
+
+[_a-zA-Z][_a-zA-Z0-9]*      {yylval.sVal = strdup(yytext); return VARNAME;}
+
+"="                         {yylval.sVal = strdup(yytext); return EQUALS;}
+
+"("                         {yylval.sVal = strdup(yytext); return LPAREN;}
+
+")"                         {yylval.sVal = strdup(yytext); return RPAREN;}                
+                                </pre>
+                            
+                            </figure>
+                            <br><br>
+                            <figure>
+                                <figcaption><h4 class='text-center'><b>A small part of the Backus-Naur grammar tree for Hatch.</b></h4></figcaption>
+                                <pre>
+assign: VARNAME EQUALS NUM_I{
+    strcat($1, strcat($2, $3));
+    $$ = $1;
+    //std::cout << "VARNAME EQUALS NUM_I" << std::endl;
+}
+    |
+        VARNAME EQUALS NUM_F{
+        strcat($1, strcat($2, $3));
+        $$ = $1;
+        //std::cout << "VARNAME EQUALS NUM_F" << std::endl;
+        }
+                                </pre>
+                            </figure>
+                            <br><br>
+                            <h2 class='text-center page-header'>Users Guide</h2>
+                    <embed style='width:100%; height:750px; margin-bottom:50px;' src='./Course_Descriptions/NaturalLanguageProcessing/Hatch_User_Guide.pdf'></embed>
+                </div>
+                <div class='col-md-2'></div>
+
             </div>
         </div> 
     </body>
