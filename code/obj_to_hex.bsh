@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+echo 'usage: obj_to_hex <.o file>'
+else
+# using only line 3 onward, strip away anything that starts ...: or
+# ends \t... (keeping only the middle). Then delete whitespace.
+objdump -d $1 | sed 's/.*://g' | sed 's/ \t.*//g' | sed -n '3,$p' | tr -d ' ' | tr -d '\t' | tr -d '\n'
+echo ''
+fi
+
