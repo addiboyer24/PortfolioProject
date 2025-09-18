@@ -1,4 +1,9 @@
-
+.navbar-nav.navbar-center {
+    float: none;
+    margin: 0 auto;
+    display: table;
+    table-layout: fixed;
+}
 .profile-table td{
     padding-right:20px;
 }
